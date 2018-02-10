@@ -21,7 +21,12 @@ public class SeedWorker implements Runnable {
 
 	@Override
 	public void run() {
-		try (DirectoryStream<Path> pathway = Files.newDirectoryStream(Paths.get(source))) {
+		Path startPath = Paths.get(source);
+		if (!Files.isDirectory(startPath) || !Files.isReadable(startPath)){
+			return;
+		}
+
+		try (DirectoryStream<Path> pathway = Files.newDirectoryStream(startPath)) {
 			for (Path path : pathway) {
 				if (Files.isDirectory(path)) {
 					workers.execute(new SeedWorker(workers, path.toAbsolutePath().toString(), struct));

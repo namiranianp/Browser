@@ -3,6 +3,7 @@ package servlets;
 import outsideCode.BaseServlet;
 import outsideCode.WorkQueue;
 import site.DataStructure;
+import site.SeedWorker;
 import site.ViewingObject;
 
 import javax.servlet.ServletException;
@@ -13,8 +14,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class SeedServlet extends BaseServlet {
-	private final DataStructure struct;
-	private final WorkQueue workers;
+	protected final DataStructure struct;
+	protected final WorkQueue workers;
 
 	public SeedServlet(DataStructure viewingObjects, WorkQueue workQueue) {
 		struct = viewingObjects;
@@ -30,7 +31,9 @@ public class SeedServlet extends BaseServlet {
 		out.printf("\twindow.location.href = \"/home\"%n");
 		out.printf("</script>%n");
 
-l		finishResponse(request, response);
+		workers.execute(new SeedWorker(workers, request.getParameter("seed"), struct));
+		
+		finishResponse(request, response);
 	}
 
 	@Override

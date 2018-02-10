@@ -68,14 +68,17 @@ public class DataStructure {
 	}
 
 	/**
-	 * Copies and returns what is in the display list
-	 *
-	 * @return a copy of the display in {@link List} format
+	 * @return ArrayList containing all {@link ViewingObject}s
+	 */
+	public ArrayList<ViewingObject> getObjects() {
+		return objects;
+	}
+
+	/**
+	 * @return ArrayList containing what is to be displayed
 	 */
 	public List<ViewingObject> getDisplay() {
-		List<ViewingObject> copy = new ArrayList<>();
-		copy.addAll(display);
-		return copy;
+		return display;
 	}
 
 	private class tagWorker implements Runnable {

@@ -2,20 +2,18 @@ package servlets;
 
 import outsideCode.BaseServlet;
 import site.DataStructure;
-import site.Driver;
-import site.ViewingObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.util.List;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class HomeServlet extends BaseServlet {
-	protected final List<ViewingObject> display;
+	protected final DataStructure struct;
 
-	public HomeServlet(List<ViewingObject> toDisplay) {
-		display = toDisplay;
+	public HomeServlet(DataStructure dataStructure) {
+		struct = dataStructure;
 	}
 
 	@Override
@@ -23,8 +21,12 @@ public class HomeServlet extends BaseServlet {
 		PrintWriter out = response.getWriter();
 		prepareResponse("Home", request, response);
 
+//		for (int i = 0; i < 4; i++) {
+			struct.getDisplay().addAll(struct.getObjects());
+//		}
+
 		createBanner(out);
-		listVideos(display, out);
+		listVideos(struct.getDisplay(), out);
 
 		finishResponse(request, response);
 	}

@@ -18,6 +18,7 @@ public class SiteServer {
 	protected final DataStructure struct;
 
 	public static final String srcPath = "/Users/pedramaranian/Code/Browser/";
+	public static final String sitePath = "http://localhost/";
 
 	public SiteServer() {
 		workers = new WorkQueue(15);
@@ -31,7 +32,7 @@ public class SiteServer {
 	public void begin(){
 		Server server = new Server(PORT);
 
-		HomeServlet home = new HomeServlet(struct.getDisplay());
+		HomeServlet home = new HomeServlet(struct);
 		SeedServlet seeder = new SeedServlet(struct, workers);
 
 		ResourceHandler resourceHandler = new ResourceHandler();

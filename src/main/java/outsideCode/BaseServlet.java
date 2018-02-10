@@ -33,7 +33,7 @@ public abstract class BaseServlet extends HttpServlet {
 			out.printf("<video class=\"videoBox\" controls>%n");
 			//TODO only supports vids currently
 			out.printf("\t<source src=\"%s\" type=\"video/mp4\">%n", target.getLocation());
-			out.printf("</video>%n");
+ 			out.printf("</video>%n");
 		}
 	}
 
