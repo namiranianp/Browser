@@ -14,11 +14,13 @@ import outsideCode.WorkQueue;
 public class DataStructure {
 	private final WorkQueue workers;
 
-	private final ReadWriteLock objLock;
+	/** Contains a list of all the {@link ViewingObject} */
 	private final ArrayList<ViewingObject> objects;
+	private final ReadWriteLock objLock;
 
-	private final ReadWriteLock sortLock;
+	/** Sorts {@link ViewingObject} based on the tags they have */
 	private final TreeMap<String, ArrayList<ViewingObject>> sorted;
+	private final ReadWriteLock sortLock;
 
 	private final ReadWriteLock displayLock;
 	private final List<ViewingObject> display;
@@ -40,7 +42,8 @@ public class DataStructure {
 	}
 
 	/**
-	 * Adds a single {@link ViewingObject} to this data structure
+	 * Adds a single {@link ViewingObject} to this data structure and sorts it based
+	 * on tags
 	 *
 	 * @param obj
 	 *            {@link ViewingObject} being added
@@ -50,21 +53,38 @@ public class DataStructure {
 		objects.add(obj);
 		objLock.unlockReadWrite();
 
-		workers.execute(new tagWorker(obj));
+		for (String tag : obj.getTags()) {
+			sortLock.lockReadWrite();
+			if (!sorted.containsKey(tag)) {
+				sorted.put(tag, new ArrayList<ViewingObject>());
+			}
+			sorted.get(tag).add(obj);
+			sortLock.unlockReadWrite();
+		}
 	}
 
 	/**
-	 * Adds multiple {@link ViewingObject} objects to this data structure
+	 * Adds multiple {@link ViewingObject} objects to this data structure and sorts
+	 * them by tag automatically
 	 *
 	 * @param objs
+	 *            {@link List} of {@link ViewingObject}s
 	 */
 	public void addObjects(List<ViewingObject> objs) {
 		objLock.lockReadWrite();
 		objects.addAll(objs);
 		objLock.unlockReadWrite();
 
+		// sort the viewing objects by tag as they are added
 		for (ViewingObject obj : objs) {
-			workers.execute(new tagWorker(obj));
+			for (String tag : obj.getTags()) {
+				sortLock.lockReadWrite();
+				if (!sorted.containsKey(tag)) {
+					sorted.put(tag, new ArrayList<ViewingObject>());
+				}
+				sorted.get(tag).add(obj);
+				sortLock.unlockReadWrite();
+			}
 		}
 	}
 
@@ -76,30 +96,17 @@ public class DataStructure {
 	}
 
 	/**
-	 * @return ArrayList containing what is to be displayed
+	 * Takes in tags as an argument and returns all the viewing objects that match
+	 * the tag, sorts it by most relevant
+	 * 
+	 * @param tags
+	 *            a list of tags that will be used
+	 * @return {@link ArrayList} of {@link ViewingObject} that contains the sorted
+	 *         results
 	 */
-	public List<ViewingObject> getDisplay() {
-		return display;
-	}
+	public List<ViewingObject> getByTags(List<String> tags) {
+		ArrayList<ViewingObject> results = new ArrayList<>();
 
-	private class tagWorker implements Runnable {
-		private final ViewingObject sorting;
-
-		public tagWorker(ViewingObject target) {
-			sorting = target;
-		}
-
-		@Override
-		public void run() {
-			for (String tag : sorting.getTags()) {
-				sortLock.lockReadWrite();
-				if (!sorted.containsKey(tag)) {
-					sorted.put(tag, new ArrayList<ViewingObject>());
-				}
-				sortLock.unlockReadWrite();
-
-				sorted.get(tag).add(sorting);
-			}
-		}
+		return results;
 	}
 }
