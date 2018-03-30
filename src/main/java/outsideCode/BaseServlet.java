@@ -26,17 +26,6 @@ public abstract class BaseServlet extends HttpServlet {
 	protected static final String TIME_BREAK = "|";
 	protected static boolean hidden = false;
 
-
-	//TODO
-	protected static void listVideos(List<ViewingObject> objects, PrintWriter out) {
-		for (ViewingObject target : objects) {
-			out.printf("<video class=\"videoBox\" controls>%n");
-			//TODO only supports vids currently
-			out.printf("\t<source src=\"%s\" type=\"video/mp4\">%n", target.getLocation());
- 			out.printf("</video>%n");
-		}
-	}
-
 	/**
 	 * Prints out the style sheet onto page because I give up
 	 *

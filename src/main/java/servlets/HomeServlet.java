@@ -21,12 +21,7 @@ public class HomeServlet extends BaseServlet {
 		PrintWriter out = response.getWriter();
 		prepareResponse("Home", request, response);
 
-//		for (int i = 0; i < 4; i++) {
-			struct.getDisplay().addAll(struct.getObjects());
-//		}
-
 		createBanner(out);
-		listVideos(struct.getDisplay(), out);
 
 		finishResponse(request, response);
 	}

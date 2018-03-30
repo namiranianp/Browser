@@ -1,15 +1,15 @@
 package site;
 
-import outsideCode.ReadWriteLock;
-import outsideCode.WorkQueue;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+import outsideCode.ReadWriteLock;
+import outsideCode.WorkQueue;
+
 /**
- * This class is meant to hold the data structure of all items and another data structure where it maps the object
- * to all the tags it has
+ * This class is meant to hold the data structure of all items and another data
+ * structure where it maps the object to all the tags it has
  */
 public class DataStructure {
 	private final WorkQueue workers;
@@ -42,7 +42,8 @@ public class DataStructure {
 	/**
 	 * Adds a single {@link ViewingObject} to this data structure
 	 *
-	 * @param obj {@link ViewingObject} being added
+	 * @param obj
+	 *            {@link ViewingObject} being added
 	 */
 	public void addObject(ViewingObject obj) {
 		objLock.lockReadWrite();
@@ -93,7 +94,7 @@ public class DataStructure {
 			for (String tag : sorting.getTags()) {
 				sortLock.lockReadWrite();
 				if (!sorted.containsKey(tag)) {
-					sorted.put(tag, new ArrayList<>());
+					sorted.put(tag, new ArrayList<ViewingObject>());
 				}
 				sortLock.unlockReadWrite();
 
@@ -102,4 +103,3 @@ public class DataStructure {
 		}
 	}
 }
-
