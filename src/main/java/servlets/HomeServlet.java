@@ -1,23 +1,25 @@
 package servlets;
 
-import outsideCode.BaseServlet;
-import site.DataStructure;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+
+import data.ViewingObjectHolder;
+import outsideCode.BaseServlet;
 
 public class HomeServlet extends BaseServlet {
-	protected final DataStructure struct;
+	protected final ViewingObjectHolder struct;
 
-	public HomeServlet(DataStructure dataStructure) {
+	public HomeServlet(ViewingObjectHolder dataStructure) {
 		struct = dataStructure;
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		prepareResponse("Home", request, response);
 
@@ -27,7 +29,8 @@ public class HomeServlet extends BaseServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 }

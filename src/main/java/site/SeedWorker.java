@@ -1,19 +1,21 @@
 package site;
 
-import outsideCode.WorkQueue;
-
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import data.ViewingObject;
+import data.ViewingObjectHolder;
+import outsideCode.WorkQueue;
+
 public class SeedWorker implements Runnable {
 	private final WorkQueue workers;
 	private final String source;
-	private final DataStructure struct;
+	private final ViewingObjectHolder struct;
 
-	public SeedWorker(WorkQueue workQueue, String startDir, DataStructure dataStructure) {
+	public SeedWorker(WorkQueue workQueue, String startDir, ViewingObjectHolder dataStructure) {
 		workers = workQueue;
 		source = startDir;
 		struct = dataStructure;
@@ -22,7 +24,7 @@ public class SeedWorker implements Runnable {
 	@Override
 	public void run() {
 		Path startPath = Paths.get(source);
-		if (!Files.isDirectory(startPath) || !Files.isReadable(startPath)){
+		if (!Files.isDirectory(startPath) || !Files.isReadable(startPath)) {
 			return;
 		}
 
@@ -38,7 +40,7 @@ public class SeedWorker implements Runnable {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			//TODO
+			// TODO
 		}
 	}
 }
