@@ -55,8 +55,6 @@ public class AccountController {
 			String fileName = "./src/main/resources/users/" + user.getUsername() + ".txt";
 			ViewingObjectHolder holder = VOHDAO.getHolderFromFormattedFile(fileName);
 			holders.put(user.getUsername(), holder);
-		} else {
-			System.out.println("no");
 		}
 
 		return "redirect:/";
