@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Home</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/banner.css}">
+<link rel="stylesheet" th:href="@{/css/files.css}">
+
+<style type="text/css">
+	.accForm {
+		margin-top: 25%;
+	}
+	
+	.accForm input[type="text"] {
+		height: 50px;
+		width: 300px;
+		font-size: 20px;		
+	}
+	
+	.accForm input[type="password"] {
+		height: 50px;
+		width: 300px;
+		font-size: 20px;
+	}
+	
+	.accForm h2 {
+		margin: 10px 0px 5px 0px;
+	}
+</style>
+
+</head>
+<body>
+	<div th:replace="~{fragments :: banner}"></div>
+
+	<div class="body">
+		<div class="col-sm-6">
+			<form action="/login" method="post" style="float: right;" class="accForm">
+				<h1>Login:</h1>
+				<h2>User Name:</h2>
+				<input type="text" placeholder="Username" id="username" name="username"><br> 
+				<h2>Password:</h2>
+				<input type="password" placeholder="Password" id="password" name="password"><br>
+				<button type="submit" style="font-size: 20px; margin-top: 10px;">Log In</button>
+			</form>
+		</div>
+		<div class="col-sm-6">
+			<form action="/createaccount" method="post" class="accForm">
+				<h1>Create Account:</h1>
+				<h2>User Name:</h2>
+				<input type="text" placeholder="Username" id="username" name="username"><br> 
+				<h2>Password:</h2>
+				<input type="password" placeholder="Password" id="password" name="password"><br>
+				<button type="submit" style="font-size: 20px; margin-top: 10px;">Create</button>
+			</form>
+		</div>
+		
+		<div th:if="${param.error}">
+			<script type="text/javascript">
+				alert("There was an issue logging you in. Please try again!");
+			</script>
+        </div>
+        <div th:if="${param.same}">
+			<script type="text/javascript">
+				alert("Someone already has an account with that name.");
+			</script>
+        </div>
+        <div th:if="${param.logout}">
+			<script type="text/javascript">
+				alert("You have been logged out!");
+			</script>
+        </div>
+	</div>
+</body>
+</html>

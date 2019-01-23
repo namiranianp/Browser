@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>File Settings</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/banner.css}">
+<link rel="stylesheet" th:href="@{/css/files.css}">
+
+</head>
+<body>
+	<div th:replace="~{fragments :: banner}"></div>
+
+	<div class="body">
+		<div class="mainView col-sm-8">
+			<h1 th:text="${mainView}? ${mainView.name} : 'No File To View'">No Title Found</h1>
+			
+			<div th:switch="${mainView.fileType}" th:remove="tag" th:if="${mainView}">
+				<span th:case=".mp4"> 
+					<video height="500px" width="850px" controls="controls">
+						<source th:src="'/files' + ${mainView.location}">
+					</video>
+				</span> 
+				<span th:case=".pdf"> 
+				 	<object th:data="'/files' + ${mainView.location}" type="application/pdf" 
+				 		style="min-height: 1000px; min-width: 850px;">
+       					<embed th:src="'/files' + ${mainView.location}" type="application/pdf" />
+   					</object>
+				</span> 
+				<span th:case="*">
+					This item can not be displayed, sorry for the inconvenience.
+				</span>
+			</div>
+		</div>
+		
+		<div class="settingSide col-sm-4">
+			<h2>Tags</h2>
+			<div style="min-width: 100%; min-height: 100px; overflow: auto; border: inset 3px;">
+				<div th:remove="tag" th:each="tag : ${mainView.tags}">
+					<a th:text="${tag}" th:href="'/search?query=' + ${tag}" style="margin: 5px;"></a>
+				</div>
+			</div>
+			<br style="height: 10px;">
+			
+			<h2>Update file information</h2>
+			<form action="/filesetting" method="post" style="border: inset 3px; padding: 5px;">
+				<input type="text" name="location" th:value="${mainView.location}" hidden="hidden">
+				<h3 style="margin-top: 5px;">New Title:</h3>
+				<!-- TODO: make pretty -->
+				<input type="text" name="newTitle" placeholder="New Title" ><br> 
+				<h3>New Tags:</h3>
+				<p>
+					<b>Note:</b> The tags must be separated by commas (,) and must not
+					contain the &quot;|&quot; character.
+				</p>
+				<input type="text" name="newTags" placeholder="New Tags"><br>
+				<button type="submit" style="height: 40px; width: 100px; margin: auto;">
+					<b>Submit</b>
+				</button>
+			</form>
+			
+		</div>
+	</div>
+</body>
+</html>

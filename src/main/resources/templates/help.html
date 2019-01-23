@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Home</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/banner.css}">
+<link rel="stylesheet" th:href="@{/css/files.css}">
+
+<style type="text/css">
+h2 {
+	color: darkred;
+	margin-left: 50px;
+}
+
+h3 {
+	color: red;
+	margin-left: 90px;
+}
+
+p {
+	margin-left: 90px;
+}
+</style>
+
+</head>
+<body>
+	<div th:replace="~{fragments :: banner}"></div>
+
+	<div class="body" style="margin-left: 10px; padding-top: 10px;">
+		<h1>Welcome to the help page for the FileExplorer WebApp!</h1>
+		<br>
+
+		<h2>Purpose of this software:</h2>
+		<br>
+		<p style="margin-left: 50px;">This software was made to create a
+			user friendly file explorer system that utilizes already existing
+			technology in browsers to display files. This was due to my
+			dissatisfaction with current file explorers and the inability to add
+			tags to files and search properly. Even though MacOS allows you to
+			add tags, I dislike the rest of the UI to the point where it is
+			unusable and I prefer using my terminal and spamming &quot;cd.&quot;
+			and &quot;ls&quot;</p>
+		<br>
+
+		<h2>File management:</h2>
+		<br>
+
+		<h3>Uploading files:</h3>
+		<p>Currently, you may only load a directory at a time, and any
+			directory you select will have every file in it, and its
+			subdirectories uploaded. To upload files, look at the top of the page
+			at the bar that says &quot;Directory to seed&quot; and enter the
+			absolute path of the directory you wish to seed. Please not that this
+			must be an absolute path from your root directory. The directory
+			traverser will recursively go through all of the files and
+			directories in the initial directory provided and shortly update your
+			view with all of your files. Once you see the file icons, you may
+			click on any of them to begin viewing and interacting with them.</p>
+		<br>
+
+
+		<h3>Adding tags to files:</h3>
+		<p>To add a tag to a file you have already uploaded, you must
+			first click on the file and enter the page to view it. Below the
+			displayed file will be a few options, below that will be a text box
+			where you may enter your desired tags. You must separate each tag by
+			a comma and none of your tags may contain the &quot;|&quot;
+			character.</p>
+
+
+		<h3>Searching through files:</h3>
+		<p>Files are searched by either exact name or their tags. If you
+			want to find a specific file, you must know its exact name, or tags
+			unique to that file. Currently only one search term at a time is
+			supported, but updates are coming. In order to search an item by tag,
+			you must first add tags to this item.</p>
+
+
+		<h2>Account management:</h2>
+		<br>
+		<p>The user has the option of making their own account if they
+			have preferences they would like to save. Otherwise, this software
+			has a &quot;default&quot; user upon first initialization which
+			behaves like any other user, except is automatically logged in upon
+			startup and requires no verification. If the user has ANY desire for
+			privacy, they should make an account.</p>
+
+
+		<h3>Creating an account:</h3>
+		<p>In order to create an account, hover your mouse over the menu
+			button on the banner and select &quot;Log In/Sign Up.&quot; There,
+			you will be directed to a page where you can log into an already
+			existing account or you can create a new one. Your account must have
+			a username not used by any previous accounts.</p>
+
+
+		<h3>Saving your account:</h3>
+		<p>
+			To save your account, make your way over to the menu button and click
+			&quot;Save Session.&quot; This will automatically save your account
+			information for your use the next time you log in. <b>NOTE:</b> this
+			will override any previous information, so files removed will be lost
+			to the software if you save your session. <b>NOTE:</b> your
+			information will only be saved if you manually save your session,
+			otherwise you will not see any changes you made upon logging in
+			again.
+		</p>
+	</div>
+</body>
+</html>

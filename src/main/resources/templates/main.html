@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Home</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/banner.css}">
+<link rel="stylesheet" th:href="@{/css/files.css}">
+
+</head>
+<body>
+	<div th:replace="~{fragments :: banner}"></div>
+
+	<div class="body">
+		<h1 style="margin-left: 25px; padding-top: 10px;" th:text="${title}">
+			Currently Available Files:
+		</h1>
+
+		<div th:each="file : ${objects}" th:switch="${file.fileType}" th:remove="tag">
+			<div th:replace="~{fragments :: (${secure}?'postLink':'getLink')}">
+			</div>
+		</div>
+		
+		<div th:if="${param.saved}">
+			<script type="text/javascript">
+				alert("Your session has been saved.");
+			</script>
+        </div>
+        <div th:if="${param.error}">
+			<script type="text/javascript">
+				alert("There was an error completing the requested operation.");
+			</script>
+        </div>
+	</div>
+</body>
+</html>

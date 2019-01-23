@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	
+<div class="banner" th:fragment="banner">
+	<form class="search col-sm-4" method="GET" action="/search">
+		<button type="submit" id="searchButton">
+			<i class="glyphicon glyphicon-search"></i>
+		</button>
+		<input type="text" name="query" placeholder="Search"
+			autocomplete="off" />
+	</form>
+
+	<form method="POST" action="/seed" class="search col-sm-4">
+		<button type="submit">
+			<i class="glyphicon glyphicon-upload"></i>
+		</button>
+		<input type="text" placeholder="Directory to seed" name="path" />
+	</form>
+
+	<div class="dropdown">
+		<button class="dropbtn">Menu</button>
+
+		<div class="dropdown-content">
+			<a href="/">Home</a> 
+			<a sec:authorize="!hasRole('ROLE_USER')" href="/login">Log In/Sign Up</a> 
+			<a sec:authorize="hasRole('ROLE_USER')" href="/logout">Log Out</a> 
+			<a href="/help">Help</a>
+			<a href="/saveUser">Save Session</a>
+		</div>
+	</div>
+</div>
+
+<div th:fragment="getLink" th:remove="tag">
+	<a th:href="'/view' + ${file.location}" class="col-sm-4 displayBox"> 
+		<span th:case=".mp4" class="glyphicon glyphicon-play" style="font-size: 125px;"></span>
+		<span th:case="*" class="glyphicon glyphicon-duplicate" style="font-size: 125px;"></span>
+		<div th:text="${file.name}" style="color: black; overflow: hidden;">No Title Found</div>
+	</a>
+</div>
+
+<div th:fragment="postLink" th:remove="tag">
+	<form th:action="'/view' + ${file.location}" method="post" class="col-sm-1 displayBox"> 
+		<button style="background-color: lightgrey; border: none; color: #337ab7">
+			<span th:case=".mp4" class="glyphicon glyphicon-play" style="font-size: 125px;"></span>
+			<span th:case="*" class="glyphicon glyphicon-duplicate" style="font-size: 125px;"></span>
+			<div th:text="${file.name}" style="color: black; overflow: hidden;">No Title Found</div>
+			<input type="text" th:value="${file.location}" name="location" hidden="hidden"/>
+			<input type="text" value="True" name="secure" hidden="hidden">
+		</button>
+	</form>
+</div>
+</html>

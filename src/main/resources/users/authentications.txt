@@ -1,0 +1,2 @@
+user:$2a$10$dqCCSKTI9MIljuAJl8vybOTOgfk0sOBHYjcWjQ6/oCP0h8mfIo/ui
+romankasel:$2a$10$MB3tQJvFqpmzZoEhNpojHOc05A9xD.01o7zSQzu5r7bGriNYhzQdu
