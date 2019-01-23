@@ -29,6 +29,7 @@
 .mainView {
 	height: 600px;
 	z-index: 0;
+	float: left;
 }
 
 .sideView {

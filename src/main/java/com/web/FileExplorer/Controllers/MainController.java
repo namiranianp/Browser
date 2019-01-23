@@ -62,7 +62,6 @@ public class MainController {
 		ViewingObject target = holder.getByLocation(pathID);
 
 		if (tags != null && !tags.isEmpty()) {
-			System.out.println("tags:" + tags);
 			String[] temp = tags.toLowerCase().split(",");
 			ArrayList<String> list = new ArrayList<>();
 			for (String s : temp) {
