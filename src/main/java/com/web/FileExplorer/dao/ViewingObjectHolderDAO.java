@@ -21,6 +21,8 @@ public interface ViewingObjectHolderDAO {
 	 * {@link ViewingObjectHolder} containing these
 	 * 
 	 * @param path Path to the formatted file or directory with formatted files
+	 * @param key  The key to be used to decrypt the file, enter an empty String if
+	 *             the file is not encrypted
 	 * @return A ViewingObjectHolder containing the items specified
 	 */
 	public ViewingObjectHolder getHolderFromFormattedFile(String path);

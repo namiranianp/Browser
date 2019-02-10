@@ -27,6 +27,7 @@ public class ViewingObjectHolderDAOImpl implements ViewingObjectHolderDAO {
 
 	@Override
 	public ViewingObjectHolder getHolderFromFormattedFile(String path) {
+		
 		// TODO include what happens if we're given a path to a directory
 		ViewingObjectHolder holder = new ViewingObjectHolder();
 		ViewingObject obj = null;

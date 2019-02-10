@@ -1,6 +1,5 @@
 package com.web.FileExplorer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import com.web.FileExplorer.dao.ViewingObjectHolderDAO;
 import com.web.FileExplorer.dao.impl.ViewingObjectHolderDAOImpl;
 import com.web.FileExplorer.dto.ViewingObjectHolder;
+import com.web.FileExplorer.services.EncryptionService;
 
 @Configuration
 public class AppConfig {
@@ -31,9 +31,14 @@ public class AppConfig {
 	}
 
 	@Bean
-	public ArrayList<String> springUsers() {
-		ArrayList<String> mutable = new ArrayList<String>();
+	public HashMap<String, String> springUsers() {
+		HashMap<String, String> mutable = new HashMap<>();
 		return mutable;
+	}
+
+	@Bean
+	public EncryptionService encryptionService() {
+		return new EncryptionService();
 	}
 
 	@Bean

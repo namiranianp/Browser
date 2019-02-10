@@ -1,0 +1,3 @@
+{ name: Pragmatism_Paper.pdf, loc: /Users/pedramaranian/Downloads/useMe/Pragmatism_Paper.pdf, type: .pdf, tags:  }
+{ name: Pragmatism_Paper (1).pdf, loc: /Users/pedramaranian/Downloads/useMe/Pragmatism_Paper (1).pdf, type: .pdf, tags:  }
+{ name: .DS_Store, loc: /Users/pedramaranian/Downloads/useMe/.DS_Store, type: .DS_Store, tags:  }

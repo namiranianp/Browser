@@ -13,6 +13,7 @@
 	border: 3px solid grey;
 	text-decoration: none;
 	margin: auto;
+	text-align: center;
 }
 
 .newLinkButton:hover {
@@ -27,7 +28,6 @@
 }
 
 .mainView {
-	height: 600px;
 	z-index: 0;
 	float: left;
 }
@@ -73,4 +73,8 @@
 .mainVid video {
 	display: inline-block;
 	max-width: 900px;
+}
+
+.vidButton {
+	padding-left: 0px;
 }

@@ -1,6 +1,8 @@
 package com.web.FileExplorer.Controllers;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -27,15 +29,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.FileExplorer.dao.ViewingObjectHolderDAO;
 import com.web.FileExplorer.dto.ViewingObjectHolder;
+import com.web.FileExplorer.services.EncryptionService;
 
 @Controller
 public class AccountController {
 
 	@Autowired
+	private EncryptionService crypt;
+
+	@Autowired
 	private HashMap<String, ViewingObjectHolder> holders;
 
 	@Autowired
-	private ArrayList<String> usernameList;
+	private HashMap<String, String> allUsers;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -45,8 +51,6 @@ public class AccountController {
 
 	@RequestMapping("/loginsuccess")
 	public String loadUser(Model model, @AuthenticationPrincipal User user) {
-		System.out.println("we here");
-
 		if (user == null) {
 			return "redirect:/?error";
 		}
@@ -69,7 +73,7 @@ public class AccountController {
 	public String createAccount(Model model, @RequestParam(value = "username", required = true) String username,
 			@RequestParam(value = "password", required = true) String password) {
 
-		if (usernameList.contains(username)) {
+		if (allUsers.containsKey(username)) {
 			return "redirect:/login?same";
 		}
 
@@ -81,7 +85,7 @@ public class AccountController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		String fileString = username + ":" + user.getPassword() + "\n";
-		usernameList.add(username);
+		allUsers.put(username, password);
 		holders.put(username, new ViewingObjectHolder());
 		try {
 			Files.write(Paths.get("./src/main/resources/users/authentications.txt"), fileString.getBytes(),
@@ -99,17 +103,21 @@ public class AccountController {
 		String username = "base";
 		String fileString;
 		String fileName = "./src/main/resources/users/";
+		ByteArrayOutputStream fileBytes = new ByteArrayOutputStream();
 
 		if (user != null) {
 			username = user.getUsername();
 		}
 
 		fileString = holders.get(username).toString();
+
 		fileName += username + ".txt";
 
 		try {
+			fileBytes.writeBytes(fileString.getBytes(StandardCharsets.UTF_8));
+
 			Files.deleteIfExists(Paths.get(fileName));
-			Files.write(Paths.get(fileName), fileString.getBytes(), StandardOpenOption.CREATE);
+			Files.write(Paths.get(fileName), fileBytes.toByteArray(), StandardOpenOption.CREATE);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

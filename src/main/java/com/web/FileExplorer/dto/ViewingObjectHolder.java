@@ -219,7 +219,6 @@ public class ViewingObjectHolder {
 	 *         search term
 	 */
 	public List<ViewingObject> search(String searchTerm) {
-		System.out.println(this.byTags.keySet());
 		String query = searchTerm.toLowerCase().trim().split(" ")[0].trim();
 		String viewLoc;
 		ArrayList<ViewingObject> finalResults = new ArrayList<>();

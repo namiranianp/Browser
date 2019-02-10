@@ -52,7 +52,14 @@ public class ViewingObject {
 		if (initialTags != null) {
 			tags.addAll(initialTags);
 		}
-		this.fileType = objectLocation.substring(objectLocation.lastIndexOf("."));
+		String type = (objectLocation.contains(".")) ? objectLocation.substring(objectLocation.lastIndexOf("."))
+				: "unk";
+
+		if (type.equalsIgnoreCase(".png")) {
+			type = ".img";
+		}
+		
+		this.fileType = type;
 	}
 
 	/**

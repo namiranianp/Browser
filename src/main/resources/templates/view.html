@@ -30,7 +30,7 @@
 <link rel="stylesheet" th:href="@{/css/files.css}">
 
 </head>
-<body>
+<body style="height: 100%;">
 	<div th:replace="~{fragments :: banner}"></div>
 
 	<div class="body">
@@ -50,40 +50,41 @@
        					<embed th:src="'/files' + ${mainView.location}" type="application/pdf" />
    					</object>
 				</span> 
+				<span th:case=".img">
+					<img th:alt="${mainView.name}" th:src="'/files' + ${mainView.location}">
+				</span>
 				<span th:case="*">
 					This item can not be displayed, sorry for the inconvenience.
 				</span>
 			</div>
 
-			<form th:action="'/files' + ${mainView.location}" th:method="GET" class="col-sm-2">
+			<form th:action="'/files' + ${mainView.location}" th:method="GET" class="col-sm-2 vidButton">
 				<button class="newLinkButton" type="submit">
 					Full Page View
 				</button>
 			</form>
 			
-			<form th:action="'/removefile' + ${mainView.location}" th:method="POST" class="col-sm-2">
+			<form th:action="'/removefile' + ${mainView.location}" th:method="POST" class="col-sm-2 vidButton">
 				<input type="text" name="location" th:value="${mainView.location}" hidden="true">
 				<button class="newLinkButton" type="submit">
 					Delete Video
 				</button>
 			</form>
-			
-			<form action="/filesetting" th:method="POST" class="col-sm-2">
-				<input type="text" name="location" th:value="${mainView.location}" hidden="true">
+		
+			<form action="/filesetting" th:method="POST" class="col-sm-2 vidButton">
+				<input type="text" name="location" th:value="${mainView.location}" hidden="true ">
 				<button class="newLinkButton" type="submit">
 					File Settings
 				</button>
 			</form>
-			
 
 			<div style="height: 100px;" class="col-sm-12">
-				<h4 style="max-width: 850px;">
+				<h4 style="max-width: 800px;">
 					Insert tags by typing them in, separating them by commas. 
-					You may not use the "|" character at any point, please, 
-					for the sake of christ.
+					You may not use the "|" character at any point.
 				</h4>
 				<form th:action="'/view' + ${mainView.location}" method="post">
-					<input style="width:100%; max-width: 850px; border: 1px solid; color: black; height: 50px;" 
+					<input style="width:100%; max-width: 800px; border: 1px solid; color: black; height: 50px;" 
 						type="text" name="tags" autocomplete="off"
 						placeholder="Tags to be added, separated by commas, may not contain &quot;|&quot;">
 					<input type="text" hidden="true" th:value="${mainView.location}" name="location">

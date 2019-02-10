@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -20,43 +20,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
-	private ArrayList<String> usernameList;
-	
+	private HashMap<String, String> allUsers;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-		.antMatchers("/", "/seed/**", "/resources/**")
-			.permitAll().anyRequest().permitAll()
-			.and()
-		.formLogin()
-			.loginPage("/login").permitAll()
-			.and()
-		.formLogin().defaultSuccessUrl("/loginsuccess", true)
-		.and()
-		.logout().permitAll();
-		
-		
+		http.authorizeRequests().antMatchers("/", "/seed/**", "/resources/**").permitAll().anyRequest().permitAll()
+				.and().formLogin().loginPage("/login").permitAll().and().formLogin()
+				.defaultSuccessUrl("/loginsuccess", true).and().logout().permitAll();
+
 		http.csrf().disable();
 	}
 
 	@Override
-	public void configure(AuthenticationManagerBuilder builder) throws Exception {		
+	public void configure(AuthenticationManagerBuilder builder) throws Exception {
 		String line;
 		String[] pair;
-		
-		//TODO fix this monstrosity
+
+		// TODO fix this monstrosity
 		try (FileReader file = new FileReader("./src/main/resources/users/authentications.txt");
 				BufferedReader buf = new BufferedReader(file);) {
 
 			while ((line = buf.readLine()) != null) {
 				pair = line.split(":");
-				builder.inMemoryAuthentication().passwordEncoder(passwordEncoder)
-					.withUser(pair[0])
-					.password(pair[1])
-					.roles("USER");
-				usernameList.add(pair[0]);
+				builder.inMemoryAuthentication().passwordEncoder(passwordEncoder).withUser(pair[0]).password(pair[1])
+						.roles("USER");
+				allUsers.put(pair[0], pair[1]);
 			}
 
 		} catch (FileNotFoundException e) {

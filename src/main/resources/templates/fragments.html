@@ -22,9 +22,10 @@
 		<button class="dropbtn">Menu</button>
 
 		<div class="dropdown-content">
-			<a href="/">Home</a> 
+			<a href="/">Home</a>
+			<a href="/accountsettings">Settings</a>
 			<a sec:authorize="!hasRole('ROLE_USER')" href="/login">Log In/Sign Up</a> 
-			<a sec:authorize="hasRole('ROLE_USER')" href="/logout">Log Out</a> 
+			<a sec:authorize="hasRole('ROLE_USER')" href="/logout">Log Out</a>
 			<a href="/help">Help</a>
 			<a href="/saveUser">Save Session</a>
 		</div>
