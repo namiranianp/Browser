@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>User Settings</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/banner.css}">
+<link rel="stylesheet" th:href="@{/css/files.css}">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<style type="text/css">
+	.userInfo {
+		margin: 15px;
+		padding-top: 15px;
+		margin-top: 5px;
+		padding-top: 5px;
+	}
+	
+	.userInfo legend {
+		border: none; 
+		margin: 0;
+	}
+	
+	.userInfo fieldset {
+		margin-bottom: 5px;
+	}
+	
+	.userInfo input {
+		margin: 5px 0px;
+	}
+</style>
+
+</head>
+<body>
+	<div th:replace="~{fragments :: banner}"></div>
+
+	<div class="body">
+		<h1 style="padding: 10px; margin-bottom: 0px; padding-bottom: 0px;" 
+			th:text="'Showing information for: ' + ${userName}">User Information
+		</h1>
+		<form class="userInfo" action="/accountsettings" method="post" id="userInfo">
+			<fieldset>
+				<legend>Username:</legend>
+				<div style="margin-left: 10px;">
+					<h5 th:text="'Current Username is ' + ${userName}"><b>Current Username</b></h5>
+					<h5 style="margin-bottom: 2px;">Update Username:</h5>
+					<input type="text" name="newName" placeholder="New Username">
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>New Password:</legend>
+				<div style="margin-left: 10px;">
+					<input type="password" placeholder="New Password" name="newPass"><br>
+					<input type="password" placeholder="Confirm Password" name="confNewPass">
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Encrypt save file:</legend>
+				<div style="margin-left: 10px;">
+					<input type="radio" name="encryptSave" value="true" 
+						th:checked="${encryptSave} ? 'checked'"> Encrypt Save File<br>
+					<input type="radio" name="encryptSave" value="false" 
+						th:checked="not ${encryptSave} ? 'checked'"> Do Not Encrypt Save File
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Send links through URL:</legend>
+				<div style="margin-left: 10px;">
+					<input type="radio" name="postLinks" value="false" 
+						th:checked="not ${postLinks} ? 'checked'"> Send Links Through URL<br>
+					<input type="radio" name="postLinks" value="true"
+						th:checked="${postLinks} ? 'checked'"> Do Not Send Links Through URL
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Encrypt file locations:</legend>
+				<div style="margin-left: 10px;">
+					<input type="radio" name="encryptLinks" value="true" 
+						th:checked="${encryptLinks} ? 'checked'"> Encrypt File Locations<br>
+					<input type="radio" name="encryptLinks" value="false"
+						th:checked="not ${encryptLinks} ? 'checked'"> Do Not Encrypt File Locations
+				</div>
+			</fieldset>
+			
+			<input type="submit" value="Update Information" onclick="submitFunc()">
+		</form>
+	</div>
+	<script type="text/javascript">
+		function submitFunc() {
+			var pass = window.prompt("Enter your password so we know it's you", "");
+			
+			$("#userInfo").submit( function(eventObj) {
+			      $('<input />').attr('type', 'text')
+			          .attr('name', "password")
+			          .attr('value', pass)
+			          .attr('hidden', "hidden")
+			          .appendTo('#userInfo');
+			      return true;
+			  });
+		}
+	
+		function requestPass() {
+			alert("Request Password")
+		}
+	</script>
+</body>
+</html>

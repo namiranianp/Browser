@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +49,67 @@ public class AccountController {
 
 	@Autowired
 	private ViewingObjectHolderDAO VOHDAO;
+
+	@PostMapping("/accountsettings")
+	public String updateUser(Model model, @AuthenticationPrincipal User user,
+			@RequestParam(value = "password", required = true) String password,
+			@RequestParam(value = "newName", required = false) String newName,
+			@RequestParam(value = "newPass", required = false) String newPass,
+			@RequestParam(value = "confNewPass", required = false) String confNewPass,
+			@RequestParam(value = "encryptSave", required = true) boolean encryptSave,
+			@RequestParam(value = "postLinks", required = true) boolean postLinks,
+			@RequestParam(value = "encryptLinks", required = true) boolean encryptLinks) {
+
+		String username = "base";
+		
+		if (user != null) {
+			username = user.getUsername();
+			// TODO check to see if boolean values are true and update them
+		}
+		
+		username = username.substring(0, 1).toUpperCase() + username.substring(1);
+		
+		model.addAttribute("userName", username);
+		model.addAttribute("userName", username);
+		model.addAttribute("encryptSave", encryptSave);
+		model.addAttribute("postLinks", postLinks);
+		model.addAttribute("encryptLinks", encryptLinks);
+		
+		System.out.println();
+		System.out.println();
+		System.out.println(":" + password);
+		System.out.println(":" + newName);
+		System.out.println(":" + newPass);
+		System.out.println(":" + confNewPass);
+		System.out.println(":" + encryptSave);
+		System.out.println(":" + postLinks);
+		System.out.println(":" + encryptLinks);
+		System.out.println();
+		System.out.println();
+		return "usersettings";
+	}
+
+	@GetMapping("/accountsettings")
+	public String userSettings(Model model, @AuthenticationPrincipal User user) {
+		String username = "base";
+		boolean encryptSave = false;
+		boolean postLinks = false;
+		boolean encryptLinks = false;
+
+		if (user != null) {
+			username = user.getUsername();
+			// TODO check to see if boolean values are true and update them
+		}
+
+		username = username.substring(0, 1).toUpperCase() + username.substring(1);
+		
+		model.addAttribute("userName", username);
+		model.addAttribute("encryptSave", encryptSave);
+		model.addAttribute("postLinks", postLinks);
+		model.addAttribute("encryptLinks", encryptLinks);
+
+		return "usersettings";
+	}
 
 	@RequestMapping("/loginsuccess")
 	public String loadUser(Model model, @AuthenticationPrincipal User user) {

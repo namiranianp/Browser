@@ -41,7 +41,7 @@
 </div>
 
 <div th:fragment="postLink" th:remove="tag">
-	<form th:action="'/view' + ${file.location}" method="post" class="col-sm-1 displayBox"> 
+	<form th:action="'/view'" method="post" class="col-sm-1 displayBox"> 
 		<button style="background-color: lightgrey; border: none; color: #337ab7">
 			<span th:case=".mp4" class="glyphicon glyphicon-play" style="font-size: 125px;"></span>
 			<span th:case="*" class="glyphicon glyphicon-duplicate" style="font-size: 125px;"></span>

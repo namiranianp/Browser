@@ -17,7 +17,7 @@
 		</h1>
 
 		<div th:each="file : ${objects}" th:switch="${file.fileType}" th:remove="tag">
-			<div th:replace="~{fragments :: (${secure}?'postLink':'getLink')}">
+			<div th:replace="~{fragments :: (${secure}?'getLink':'postLink')}">
 			</div>
 		</div>
 		

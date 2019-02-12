@@ -17,13 +17,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private HashMap<String, String> allUsers;
-
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/", "/seed/**", "/resources/**").permitAll().anyRequest().permitAll()
@@ -37,15 +37,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(AuthenticationManagerBuilder builder) throws Exception {
 		String line;
 		String[] pair;
-
+		
 		// TODO fix this monstrosity
 		try (FileReader file = new FileReader("./src/main/resources/users/authentications.txt");
 				BufferedReader buf = new BufferedReader(file);) {
 
 			while ((line = buf.readLine()) != null) {
 				pair = line.split(":");
-				builder.inMemoryAuthentication().passwordEncoder(passwordEncoder).withUser(pair[0]).password(pair[1])
-						.roles("USER");
+				builder.inMemoryAuthentication().passwordEncoder(passwordEncoder).withUser(pair[0])
+					.password(pair[1]).roles("USER");
 				allUsers.put(pair[0], pair[1]);
 			}
 

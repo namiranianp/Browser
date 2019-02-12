@@ -42,6 +42,11 @@ public class AppConfig {
 	}
 
 	@Bean
+	public String userDirLocation() {
+		return "./src/main/resources/users/";
+	}
+
+	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}

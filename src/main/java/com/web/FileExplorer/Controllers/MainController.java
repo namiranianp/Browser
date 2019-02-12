@@ -166,8 +166,16 @@ public class MainController {
 		}
 
 		if (secure) {
-			// want to be secure
-			return view(model, request, user);
+			// using get code
+			System.out.println("secure!");
+			ViewingObjectHolder holder = new ViewingObjectHolder();
+			holder.addObjects(holders.get(username).getMutables());
+			ViewingObject target = holder.removeObject(pathID);
+			
+			model.addAttribute("mainView", target);
+			model.addAttribute("objects", holder.getMutables());
+			
+			return "view";
 		}
 
 		if (pathID != null && tags != null) {
