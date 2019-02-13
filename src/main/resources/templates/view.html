@@ -43,18 +43,18 @@
 					<video height="500px" width="850px" controls="controls">
 						<source th:src="'/files' + ${mainView.location}">
 					</video>
-				</span> 
+				</span>
 				<span th:case=".pdf"> 
 				 	<object th:data="'/files' + ${mainView.location}" type="application/pdf" 
 				 		style="min-height: 500px; min-width: 850px;">
        					<embed th:src="'/files' + ${mainView.location}" type="application/pdf" />
    					</object>
-				</span> 
+				</span>
 				<span th:case=".img">
 					<img th:alt="${mainView.name}" th:src="'/files' + ${mainView.location}">
 				</span>
 				<span th:case="*">
-					This item can not be displayed, sorry for the inconvenience.
+					<h2>This item can not be displayed, sorry for the inconvenience.</h2>
 				</span>
 			</div>
 
@@ -67,7 +67,7 @@
 			<form th:action="'/removefile' + ${mainView.location}" th:method="POST" class="col-sm-2 vidButton">
 				<input type="text" name="location" th:value="${mainView.location}" hidden="true">
 				<button class="newLinkButton" type="submit">
-					Delete Video
+					Delete File
 				</button>
 			</form>
 		

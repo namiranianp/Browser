@@ -167,7 +167,6 @@ public class MainController {
 
 		if (secure) {
 			// using get code
-			System.out.println("secure!");
 			ViewingObjectHolder holder = new ViewingObjectHolder();
 			holder.addObjects(holders.get(username).getMutables());
 			ViewingObject target = holder.removeObject(pathID);
