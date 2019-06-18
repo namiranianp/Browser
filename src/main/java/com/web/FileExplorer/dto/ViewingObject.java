@@ -16,6 +16,8 @@ import java.util.regex.Pattern;
  *
  */
 public class ViewingObject {
+	// TODO implement comparable and override .equals and .hashCode
+
 	/**
 	 * This pattern is for identifying individual tags from a list
 	 */
@@ -55,10 +57,10 @@ public class ViewingObject {
 		String type = (objectLocation.contains(".")) ? objectLocation.substring(objectLocation.lastIndexOf("."))
 				: "unk";
 
-		if (type.equalsIgnoreCase(".png")) {
+		if (type.equalsIgnoreCase(".png") || type.equalsIgnoreCase(".jpg")) {
 			type = ".img";
 		}
-		
+
 		this.fileType = type;
 	}
 
@@ -209,7 +211,6 @@ public class ViewingObject {
 	 * @param otherPath Path in a string format of a directory
 	 * @return String containing relative path
 	 */
-
 	public String getRelPath(String otherPath) {
 		return Paths.get(otherPath).relativize(Paths.get(objLoc)).toString();
 	}
@@ -218,6 +219,8 @@ public class ViewingObject {
 	 * Returns an exact copy of this ViewingObject, changing the new object should
 	 * have no effect on the current object
 	 */
+	// TODO returning this.tags returns reference to mutable copy which is bad, bad,
+	// bad
 	public ViewingObject clone() {
 		return new ViewingObject(this.objLoc, this.name, this.tags);
 	}

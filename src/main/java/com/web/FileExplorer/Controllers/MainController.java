@@ -34,7 +34,6 @@ public class MainController {
 
 	@GetMapping(value = "/")
 	public String home(Model model, @AuthenticationPrincipal User user) {
-		// TODO homescreen
 		String username = "base";
 
 		if (user != null) {

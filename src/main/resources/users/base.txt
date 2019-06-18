@@ -1,3 +1,6 @@
-{ name: videoplayback (1).mp4, loc: /Users/pedramaranian/Downloads/vids/videoplayback (1).mp4, type: .mp4, tags:  }
-{ name: videoplayback.mp4, loc: /Users/pedramaranian/Downloads/vids/videoplayback.mp4, type: .mp4, tags:  }
-{ name: videoplayback (2).mp4, loc: /Users/pedramaranian/Downloads/vids/videoplayback (2).mp4, type: .mp4, tags: |a||b||c| }
+{ name: Third Essay.pdf, loc: /Users/pedramaranian/Downloads/useMe/Third Essay.pdf, type: .pdf, tags:  }
+{ name: arrow.png, loc: /Users/pedramaranian/Downloads/useMe/arrow.png, type: .img, tags:  }
+{ name: pragmatism.pdf, loc: /Users/pedramaranian/Downloads/useMe/pragmatism.pdf, type: .pdf, tags:  }
+{ name: Ethics Final Essay.pdf, loc: /Users/pedramaranian/Downloads/useMe/Ethics Final Essay.pdf, type: .pdf, tags:  }
+{ name: Anthropocentrism, Materialism, and Racism.pdf, loc: /Users/pedramaranian/Downloads/useMe/Anthropocentrism, Materialism, and Racism.pdf, type: .pdf, tags:  }
+{ name: arrow.jpg, loc: /Users/pedramaranian/Downloads/useMe/arrow.jpg, type: .img, tags:  }

@@ -39,19 +39,22 @@
 			<h1 th:text="${mainView}? ${mainView.name} : 'No File To View'">No Title Found</h1>
 			
 			<div th:switch="${mainView.fileType}" th:remove="tag" th:if="${mainView}">
-				<span th:case=".mp4"> 
+				<span th:case=".mp4" th:remove="tag"> 
 					<video height="500px" width="850px" controls="controls">
 						<source th:src="'/files' + ${mainView.location}">
 					</video>
 				</span>
-				<span th:case=".pdf"> 
+				<span th:case=".pdf" th:remove="tag"> 
 				 	<object th:data="'/files' + ${mainView.location}" type="application/pdf" 
 				 		style="min-height: 500px; min-width: 850px;">
        					<embed th:src="'/files' + ${mainView.location}" type="application/pdf" />
    					</object>
 				</span>
-				<span th:case=".img">
-					<img th:alt="${mainView.name}" th:src="'/files' + ${mainView.location}">
+				<span th:case=".img" th:remove="tag">
+					<div id="imageHolder" style="height: 500px; width: 850px; overflow: scroll; margin-bottom: 5px;
+						display: inline-block;">
+						<img id="image" th:alt="${mainView.name}" th:src="'/files' + ${mainView.location}">
+					</div>
 				</span>
 				<span th:case="*">
 					<h2>This item can not be displayed, sorry for the inconvenience.</h2>
@@ -77,6 +80,15 @@
 					File Settings
 				</button>
 			</form>
+			
+			<div th:if="${mainView.fileType} == '.img'" class="col-sm-2">
+				<button onclick="rotate(-90)" style="height: 40px; width: 40px; background-color: blue; margin-right: 5px;">
+					Left
+				</button>
+				<button onclick="rotate(90)" style="height: 40px; width: 40px; background-color: green; margin-left: 5px;">
+					Right
+				</button>
+			</div>
 
 			<div style="height: 100px;" class="col-sm-12">
 				<h4 style="max-width: 800px;">
@@ -102,4 +114,68 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	function rotate(deg){
+		var image = document.getElementById("image");
+		let angle = image.style.webkitTransform.slice(7,-4);
+		let newAngle = (angle) ? parseInt(angle) + deg : deg;
+		
+		while(newAngle > 360) {
+			newAngle -= 360;
+		}
+		while(newAngle < -360) {
+			newAngle += 360;
+		}
+		
+		image.style.webkitTransform="rotate(" + newAngle + "deg)";
+		
+		// adjust for top getting cut off
+		let side = (newAngle / 90) % 4;
+		let holdHeight = parseInt(document.getElementById("imageHolder").style.height.slice(0,-2));
+		let imgHeight = -1;
+		let newPad = -1;
+
+		switch (side) {
+		case -3:
+			//current top is OG left
+			newPad = image.height - holdHeight;
+			image.style.padding="0px 0px 0px " + newPad + "px";
+			break;
+		case -2:
+			//current top is OG bottom
+			newPad = image.height - holdHeight;
+			image.style.padding="0px 0px " + newPad + "px 0px";
+			break;
+		case -1:
+			//current top is OG right
+			newPad = image.width - holdHeight;
+			image.style.padding="0px 0px " + newPad + "px 0px";
+			break;
+		case 0:
+			//current top is OG top
+			newPad = image.height - holdHeight;
+			image.style.padding=newPad + "px 0px 0px 0px";
+			break;
+		case 1:
+			//current top is OG left
+			newPad = image.width - holdHeight;
+			image.style.padding="0px 0px 0px " + newPad + "px";
+			break;
+		case 2:
+			//current top is OG bottom
+			newPad = image.height - holdHeight;
+			image.style.padding="0px 0px " + newPad + "px 0px";
+			break;
+		case 3:
+			//current top is OG right
+			newPad = image.width - holdHeight;
+			image.style.padding="0px " + newPad + "px 0px 0px";
+			break;
+		default:
+			//should never arrive here
+			console.log("error, reached default in rotate function");
+			break;
+		}
+	}
+</script>
 </html>
